@@ -1,5 +1,7 @@
 package com.marlabs.controller;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -21,8 +23,13 @@ public class SecurityTest {
 	private UserRepository repo;
 
 	@RequestMapping("/")
-	public String logging() {
+	public String logging(Principal principal,ModelMap map) {
 
+		
+		System.out.println("Current User is "+principal.getName());
+		
+		map.addAttribute("user", principal.getName());
+		
 		return "home.html";
 	}
 
@@ -49,7 +56,7 @@ public class SecurityTest {
 	}
 	
 	@RequestMapping("/logout1")
-	public String logoutPage() {
+	public String logoutPage(Principal principal) {
 		
 		System.out.println("SecurityTest.logoutPage()");
 		
